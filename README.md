@@ -39,6 +39,37 @@ Busy frontbuffer bits: 0x00000000
 
 In `powertop`, the `Idle stats` tab should show the system entering the C10 power state.
 
+## Building packages
+
+This repo contains a spec file to build an akmod package for Fedora. To build and install the package:
+
+1. Download the sources.
+
+    ```bash
+    cd rpm
+    spectool -g edp-psr-hack-kmod.spec
+    ```
+
+2. Build the RPMs.
+
+    ```bash
+    rpmbuild -bb \
+        --define "_sourcedir $(pwd)" \
+        --define "_specdir $(pwd)" \
+        --define "_rpmdir $(pwd)" \
+        edp-psr-hack-kmod.spec
+    ```
+
+3. Install the akmod and common RPMs.
+
+    ```bash
+    sudo dnf install \
+        ./x86_64/akmod-edp-psr-hack-*.rpm \
+        ./noarch/edp-psr-hack-kmod-common-*.rpm
+    ```
+
+4. That's it! Similar to other akmod packages, the akmod system will build the kernel module whenever the kernel is updated.
+
 ## License
 
 GPLv2+

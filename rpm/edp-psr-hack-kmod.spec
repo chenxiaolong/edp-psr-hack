@@ -5,7 +5,7 @@
 
 Name:           %{_name}-kmod
 Version:        1.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Kernel module for force enabling PSR on internal eDP displays
 
 License:        GPLv2+
@@ -43,7 +43,7 @@ kmodtool --target %{_target_cpu} --repo rpmfusion --kmodname %{_name} %{?buildfo
 %setup -q -c
 
 for kernel_version in %{?kernel_versions}; do
-  cp -a v%{version} _kmod_build_${kernel_version%%___*}
+  cp -a %{_name}-%{version} _kmod_build_${kernel_version%%___*}
 done
 
 
@@ -70,10 +70,15 @@ echo %{_name} > %{buildroot}%{_modulesloaddir}/%{_name}.conf
 
 
 %files common
-%doc v%{version}/README.md v%{version}/LICENSE
+%license %{_name}-%{version}/LICENSE
+%doc %{_name}-%{version}/README.md
 %_modulesloaddir/%{_name}.conf
 
 
 %changelog
+* Fri Dec 9 2022 Andrew Gunnerson <accounts+fedora@chiller3.com> - 1.0-2
+- Fix directory structure for Github-generated tarballs
+- Mark LICENSE as license instead of documentation
+
 * Fri Dec 9 2022 Andrew Gunnerson <accounts+fedora@chiller3.com> - 1.0-1
 - Initial release
