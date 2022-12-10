@@ -6,6 +6,8 @@ When PSR is disabled, the system cannot enter the lowest C10 power state when id
 
 This module is inspired by encomHat's blog post at https://encomhat.com/2022/09/linux-laptop-intel-gpu/. However, instead of patching the kernel at build time, this module patches the return value of `drm_dp_psr_setup_time` at runtime to always report 0us. As of kernel 6.0.11, the only place that function is called is in the i915 driver where it decides whether or not to disable PSR.
 
+This effectively reverses the effect of [commit `dfd2e9ab6a7db56a5f5bb55f71485a92613c8e11`](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=dfd2e9ab6a7db56a5f5bb55f71485a92613c8e11).
+
 ## Supported laptops
 
 To determine whether your laptop is supported, boot with the `drm.debug=0x1ff log_buf_len=32M` kernel options and check `dmesg | grep PSR` for:
